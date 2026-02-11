@@ -49,6 +49,7 @@ class AuthenticatedSessionController extends Controller
             ];
             if (Auth::attempt($credentials, $request->boolean('remember'))) {
                 $request->session()->regenerate();
+                Auth::logoutOtherDevices($request->password);
 
                 return redirect()->intended(route('dashboard', absolute: false));
             }
